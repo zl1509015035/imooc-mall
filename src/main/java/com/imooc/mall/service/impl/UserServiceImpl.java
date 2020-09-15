@@ -68,9 +68,15 @@ public class UserServiceImpl implements UserService {
     public void updateInformation(User user) throws ImoocMallException {
         //更新个性签名
         int updateCount = userMapper.updateByPrimaryKeySelective(user);
-        if(updateCount > 1){
+        if (updateCount > 1) {
             throw new ImoocMallException(ImoocMallExceptionEnum.UPDATE_FAILD);
         }
+    }
+
+    @Override
+    public boolean checkAdminRole(User user) {
+        //1 普通用户 2 管理员
+        return user.getRole().equals(2);
     }
 
 

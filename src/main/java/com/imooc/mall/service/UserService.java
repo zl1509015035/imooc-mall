@@ -17,4 +17,6 @@ public interface UserService {
     User login(String userName, String password) throws ImoocMallException, NoSuchAlgorithmException;
 
     void updateInformation(User user) throws ImoocMallException;
+
+    boolean checkAdminRole(User user);
 }

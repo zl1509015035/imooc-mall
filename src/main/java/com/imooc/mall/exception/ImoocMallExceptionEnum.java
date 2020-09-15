@@ -12,6 +12,7 @@ public enum ImoocMallExceptionEnum {
     WRONG_PASSWORD(10006,"登录密码错误，请重试"),
     NEED_LOGIN(10007,"用户未登录，请登录"),
     UPDATE_FAILD(10008,"更新失败，请重试"),
+    NEED_ADMIN(10009,"无管理员权限"),
     SYSTEM_ERROR(20000,"系统异常");
     /**
      * 异常码
