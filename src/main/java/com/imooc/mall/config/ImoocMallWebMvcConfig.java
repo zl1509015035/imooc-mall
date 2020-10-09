@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * 描述：     配置地址映射
+ * 描述：     配置Swagger地址映射
  */
 @Configuration
 public class ImoocMallWebMvcConfig implements WebMvcConfigurer {
