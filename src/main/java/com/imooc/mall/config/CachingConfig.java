@@ -1,6 +1,7 @@
 package com.imooc.mall.config;
 
 import java.time.Duration;
+
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,13 +20,11 @@ public class CachingConfig {
     @Bean
     public RedisCacheManager redisCacheManager(RedisConnectionFactory connectionFactory) {
 
-        RedisCacheWriter redisCacheWriter = RedisCacheWriter
-                .lockingRedisCacheWriter(connectionFactory);
+        RedisCacheWriter redisCacheWriter = RedisCacheWriter.lockingRedisCacheWriter(connectionFactory);
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
         cacheConfiguration = cacheConfiguration.entryTtl(Duration.ofSeconds(30));
 
-        RedisCacheManager redisCacheManager = new RedisCacheManager(redisCacheWriter,
-                cacheConfiguration);
+        RedisCacheManager redisCacheManager = new RedisCacheManager(redisCacheWriter, cacheConfiguration);
         return redisCacheManager;
     }
 }
