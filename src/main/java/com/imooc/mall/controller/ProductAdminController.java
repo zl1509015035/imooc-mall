@@ -1,11 +1,16 @@
 package com.imooc.mall.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.imooc.mall.common.ApiRestResponse;
 import com.imooc.mall.common.Constant;
 import com.imooc.mall.exception.ImoocMallException;
 import com.imooc.mall.exception.ImoocMallExceptionEnum;
+import com.imooc.mall.model.pojo.Product;
 import com.imooc.mall.model.request.AddProductReq;
+import com.imooc.mall.model.request.UpdateProductReq;
 import com.imooc.mall.service.ProductService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -76,5 +81,35 @@ public class ProductAdminController {
             effectiveURI = null;
         }
         return effectiveURI;
+    }
+
+    @ApiOperation("后台更新商品")
+    @PostMapping("/admin/product/update")
+    public ApiRestResponse updateProduct(@Valid @RequestBody UpdateProductReq updateProductReq) {
+        Product product = new Product();
+        BeanUtils.copyProperties(updateProductReq, product);
+        productService.update(product);
+        return ApiRestResponse.success();
+    }
+
+    @ApiOperation("后台删除商品")
+    @PostMapping("/admin/product/delete")
+    public ApiRestResponse deleteProduct(@RequestParam Integer id) {
+        productService.delete(id);
+        return ApiRestResponse.success();
+    }
+
+    @ApiOperation("后台批量上下架接口")
+    @PostMapping("/admin/product/batchUpdateSellStatus")
+    public ApiRestResponse batchUpdateSellStatus(@RequestParam Integer[] ids,@RequestParam Integer sellStatus) {
+        productService.batchUpdateSellStatus(ids,sellStatus);
+        return ApiRestResponse.success();
+    }
+
+    @ApiOperation("后台商品列表接口")
+    @PostMapping("/admin/product/list")
+    public ApiRestResponse list(@RequestParam Integer pageNum,@RequestParam Integer pageSize) {
+        PageInfo pageInfo = productService.listForAdmin(pageNum, pageSize);
+        return ApiRestResponse.success(pageInfo);
     }
 }

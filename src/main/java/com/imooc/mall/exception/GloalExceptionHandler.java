@@ -56,8 +56,8 @@ public class GloalExceptionHandler {
             }
         }
         if (list.size() == 0) {
-            return  ApiRestResponse.error(ImoocMallExceptionEnum.REQUEST_PARAM_ERROR);
+            return ApiRestResponse.error(ImoocMallExceptionEnum.REQUEST_PARAM_ERROR);
         }
-        return ApiRestResponse.error(ImoocMallExceptionEnum.REQUEST_PARAM_ERROR.getCode(),list.toString());
+        return ApiRestResponse.error(ImoocMallExceptionEnum.REQUEST_PARAM_ERROR.getCode(), list.toString());
     }
 }

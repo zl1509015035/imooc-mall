@@ -155,4 +155,18 @@
         from imooc_mall_product
         where name = #{name,jdbcType=VARCHAR}
     </select>
+    <update id="batchUpdateSellStatus">
+        update imooc_mall_product
+        set status = #{sellStatus}
+        where id in
+        <foreach collection="ids" open="(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </update>
+    <select id="selectListForAdmin" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from imooc_mall_product
+        order by update_time desc
+    </select>
 </mapper>

@@ -19,6 +19,7 @@ public enum ImoocMallExceptionEnum {
     DELETE_PARAM_ERROR(10013,"删除失败"),
     MKDIR_FAILED(10014,"文件夹创建失败"),
     UPLOAD_FAILED(10015,"图片上传失败"),
+    DELETE_FAILED(10016,"删除失败"),
     SYSTEM_ERROR(20000,"系统异常");
     /**
      * 异常码
