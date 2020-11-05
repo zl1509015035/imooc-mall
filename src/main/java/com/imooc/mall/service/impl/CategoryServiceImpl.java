@@ -2,7 +2,6 @@ package com.imooc.mall.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.imooc.mall.common.ApiRestResponse;
 import com.imooc.mall.exception.ImoocMallException;
 import com.imooc.mall.exception.ImoocMallExceptionEnum;
 import com.imooc.mall.model.dao.CategoryMapper;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public PageInfo listForAdmin(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+    public PageInfo listForAdmin(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize, "type,order_num");
         List<Category> categoryList = categoryMapper.selectList();
         PageInfo pageInfo = new PageInfo(categoryList);
@@ -78,9 +76,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Cacheable(value = "listCategoryForCustomer")
-    public List<CategoryVO> listCategoryForCustomer() {
+    public List<CategoryVO> listCategoryForCustomer(Integer parentId) {
         ArrayList<CategoryVO> CategoryVOList = new ArrayList<>();
-        recursivelyFindCategories(CategoryVOList, 0);
+        recursivelyFindCategories(CategoryVOList, parentId);
         return CategoryVOList;
     }
 
@@ -95,7 +93,7 @@ public class CategoryServiceImpl implements CategoryService {
                 BeanUtils.copyProperties(category, categoryVO);
                 categoryVOList.add(categoryVO);
                 //将此目录的子目录进行递归填充
-                recursivelyFindCategories(categoryVO.getChildCategory(),categoryVO.getId());
+                recursivelyFindCategories(categoryVO.getChildCategory(), categoryVO.getId());
             }
 
         }
