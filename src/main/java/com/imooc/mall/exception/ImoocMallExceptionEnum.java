@@ -16,10 +16,11 @@ public enum ImoocMallExceptionEnum {
     PARA_NOT_NULL(10010,"参数不能为空"),
     CREATE_FAILED(10011,"新增失败"),
     REQUEST_PARAM_ERROR(10012,"参数错误"),
-    DELETE_PARAM_ERROR(10013,"删除失败"),
+    DELETE_FAILED(10013,"删除失败"),
     MKDIR_FAILED(10014,"文件夹创建失败"),
     UPLOAD_FAILED(10015,"图片上传失败"),
-    DELETE_FAILED(10016,"删除失败"),
+    NOT_SALE(10016,"商品状态不可售"),
+    NOT_ENOUGH(10017,"商品库存不足"),
     SYSTEM_ERROR(20000,"系统异常");
     /**
      * 异常码
