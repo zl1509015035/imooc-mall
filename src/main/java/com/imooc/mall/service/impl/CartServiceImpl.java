@@ -27,6 +27,16 @@ public class CartServiceImpl implements CartService {
     CartMapper cartMapper;
 
     @Override
+    public List<CartVO> list(Integer userId) {
+        List<CartVO> cartVOS = cartMapper.selectList(userId);
+        for (int i = 0; i < cartVOS.size(); i++) {
+            CartVO cartVO = cartVOS.get(i);
+            cartVO.setTotalPrice(cartVO.getPrice() * cartVO.getQuantity());
+        }
+        return cartVOS;
+    }
+
+    @Override
     public List<CartVO> add(Integer userId, Integer productId, Integer count) {
         validProduct(productId, count);
 
@@ -50,7 +60,7 @@ public class CartServiceImpl implements CartService {
             cartNew.setSelected(Constant.Cart.CHECKED);
             cartMapper.updateByPrimaryKeySelective(cartNew);
         }
-        return null;
+        return this.list(userId);
     }
 
     public void validProduct(Integer productId, Integer count) {
