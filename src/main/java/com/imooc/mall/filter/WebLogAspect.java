@@ -39,8 +39,11 @@ public class WebLogAspect {
         log.info("URL : " + request.getRequestURL().toString());
         log.info("HTTP_METHOD :" + request.getMethod());
         log.info("IP : " + request.getRemoteAddr());
+        //获取类信息
         log.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "."
+                //获取方法信息
                 + joinPoint.getSignature().getName());
+        //打印参数
         log.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
     }
 

@@ -19,7 +19,7 @@ public class CachingConfig {
 
     @Bean
     public RedisCacheManager redisCacheManager(RedisConnectionFactory connectionFactory) {
-
+        
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.lockingRedisCacheWriter(connectionFactory);
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
         cacheConfiguration = cacheConfiguration.entryTtl(Duration.ofSeconds(30));
