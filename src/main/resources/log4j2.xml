@@ -7,11 +7,14 @@
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+
       <ThresholdFilter level="info" onMatch="ACCEPT"
         onMismatch="DENY"/>
       <PatternLayout
         pattern="[%d{MM:dd HH:mm:ss.SSS}] [%level] [%logger{36}] - %msg%n"/>
     </Console>
+
+
 
     <!--debug级别日志文件输出-->
     <RollingFile name="debug_appender" fileName="${baseDir}/debug.log"
@@ -72,6 +75,13 @@
     </RollingFile>
   </Appenders>
   <Loggers>
+
+      <logger name="org.springframework" level="info"
+              additivity="true">
+        <AppenderRef ref="Console" />
+        <AppenderRef ref="MyFile" />
+      </logger>
+
     <Root level="debug">
       <AppenderRef ref="Console"/>
       <AppenderRef ref="debug_appender"/>

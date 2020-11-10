@@ -74,4 +74,60 @@ public class CartServiceImpl implements CartService {
             throw new ImoocMallException(ImoocMallExceptionEnum.NOT_ENOUGH);
         }
     }
+
+    @Override
+    public List<CartVO> update(Integer userId, Integer productId, Integer count) {
+        validProduct(productId, count);
+
+        Cart cart = cartMapper.selectCartByUserIdAndProductId(userId, productId);
+        if (cart == null) {
+            //这个商品之前不再购物车中，无法更新
+            throw new ImoocMallException(ImoocMallExceptionEnum.UPDATE_FAILD);
+        } else {
+            //这个商品已经在购物车中，则更新数量
+            Cart cartNew = new Cart();
+            cartNew.setQuantity(count);
+            cartNew.setId(cart.getId());
+            cartNew.setProductId(cart.getProductId());
+            cartNew.setUserId(cart.getUserId());
+            cartNew.setSelected(Constant.Cart.CHECKED);
+            cartMapper.updateByPrimaryKeySelective(cartNew);
+        }
+        return this.list(userId);
+    }
+
+    @Override
+    public List<CartVO> delete(Integer userId, Integer productId) {
+
+        Cart cart = cartMapper.selectCartByUserIdAndProductId(userId, productId);
+        if (cart == null) {
+            //这个商品之前不再购物车中，无法删除
+            throw new ImoocMallException(ImoocMallExceptionEnum.DELETE_FAILED);
+        } else {
+            //这个商品已经在购物车中，则可以删除
+            cartMapper.deleteByPrimaryKey(cart.getId());
+        }
+        return this.list(userId);
+    }
+
+    @Override
+    public List<CartVO> selectOrNot(Integer userId,Integer productId,Integer seleccted){
+        Cart cart = cartMapper.selectCartByUserIdAndProductId(userId, productId);
+        if (cart == null) {
+            //这个商品之前不再购物车中，无法选中
+            throw new ImoocMallException(ImoocMallExceptionEnum.UPDATE_FAILD);
+        } else {
+            //这个商品已经在购物车中，则可以选中
+            cartMapper.selectOrNot(userId,productId,seleccted);
+        }
+        return this.list(userId);
+    }
+
+    @Override
+    public List<CartVO> selectAllOrNot(Integer userId, Integer seleccted){
+        //改变选中状态
+        cartMapper.selectOrNot(userId, null, seleccted);
+        return this.list(userId);
+    }
+
 }

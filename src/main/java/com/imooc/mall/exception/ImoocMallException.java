@@ -13,6 +13,7 @@ public class ImoocMallException extends RuntimeException{
     }
 
     public ImoocMallException(ImoocMallExceptionEnum exceptionEnum){
+        //调用上一个构造函数
         this(exceptionEnum.getCode(),exceptionEnum.getMsg());
     }
 
