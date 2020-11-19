@@ -18,6 +18,8 @@ import com.imooc.mall.service.OrderService;
 import com.imooc.mall.util.OrderCodeFactory;
 import org.apache.catalina.LifecycleListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import java.util.List;
 /**
  * 描述：订单Service实现类
  */
-
+@Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -44,6 +46,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderItemMapper orderItemMapper;
 
+    //数据库事务
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String create(CreateOrderReq createOrderReq) {
         //拿到用户ID
