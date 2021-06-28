@@ -1,2 +1,28 @@
 # Project exclude paths
-/target/
+target/
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+### Gradle Files ###
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
